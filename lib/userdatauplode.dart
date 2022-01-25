@@ -66,14 +66,17 @@ class _UserDataState extends State<UserData> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Create Your Profile"),
+        backgroundColor: Colors.green[600],
       ),
       body: SingleChildScrollView(
         child: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              SizedBox(height: 15),
+
               textfielddemo('First Name', firstname),
               SizedBox(height: 5),
               textfielddemo('Last Name', lastname),
@@ -93,7 +96,14 @@ class _UserDataState extends State<UserData> {
                   // controller: controller
                   decoration: InputDecoration(
                     hintText: 'Address',
-                    border: OutlineInputBorder(),
+                    fillColor: Colors.grey[200],
+                    filled: true,
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(50.0),
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -117,11 +127,11 @@ class _UserDataState extends State<UserData> {
                       },
                       child: Text(
                         'Get Location',
-                        style: TextStyle(color: Colors.blue),
+                        style: TextStyle(
+                            color: Colors.green, fontWeight: FontWeight.bold),
                       ),
                       style: ElevatedButton.styleFrom(
-                          primary: Colors.transparent,
-                          shadowColor: Colors.transparent)),
+                          primary: Colors.transparent, elevation: 0)),
 
               // Container(
               //   child: ,
@@ -137,7 +147,7 @@ class _UserDataState extends State<UserData> {
               SizedBox(height: 10),
               Text(
                 "Choose Your Profile Photo",
-                style: TextStyle(color: Colors.blue),
+                style: TextStyle(color: Colors.grey[500]),
               ),
               SizedBox(height: 10),
 
@@ -148,31 +158,59 @@ class _UserDataState extends State<UserData> {
                       onPressed: () async {
                         selectImage(ImageSource.gallery);
                       },
-                      child: Text("Gallery")),
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.transparent,
+                        elevation: 0,
+                      ),
+                      child: Text(
+                        "Gallery",
+                        style: TextStyle(
+                            color: Colors.green, fontWeight: FontWeight.bold),
+                      )),
                   SizedBox(width: 10),
                   ElevatedButton(
                       onPressed: () {
                         selectImage(ImageSource.camera);
                       },
-                      child: Text("Camera")),
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.transparent,
+                        elevation: 0,
+                      ),
+                      child: Text(
+                        "Camera",
+                        style: TextStyle(
+                            color: Colors.green, fontWeight: FontWeight.bold),
+                      )),
                 ],
               ),
-              ElevatedButton(
-                  onPressed: () async {
-                    setState(() {
-                      isUploading = true;
-                    });
-                    bool a = await uploadImageFile();
-                    if (a) {
-                      await uplodeuserdata();
-                    } else {
+              SizedBox(
+                width: 200,
+                height: 40,
+                child: ElevatedButton(
+                    onPressed: () async {
                       setState(() {
-                        isUploading = false;
+                        isUploading = true;
                       });
-                      print('some error occured');
-                    }
-                  },
-                  child: Text("Submit")),
+                      bool a = await uploadImageFile();
+                      if (a) {
+                        await uplodeuserdata();
+                      } else {
+                        setState(() {
+                          isUploading = false;
+                        });
+                        print('some error occured');
+                      }
+                    },
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.green[600]),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                        ))),
+                    child: Text("Submit")),
+              ),
               if (isUploading) ...[CircularProgressIndicator()]
             ],
           ),
@@ -233,7 +271,14 @@ class _UserDataState extends State<UserData> {
         controller: controller,
         decoration: InputDecoration(
           hintText: text,
-          border: OutlineInputBorder(),
+          fillColor: Colors.grey[200],
+          filled: true,
+          border: OutlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: const BorderRadius.all(
+              Radius.circular(50.0),
+            ),
+          ),
         ),
       ),
     );
